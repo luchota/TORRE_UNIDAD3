@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 import productImage from './assets/file.jpg';
 
-
-const ProductDetail = () => {
+const ProductDetail = ({ handleCompraClick }) => {
   const product = {
     nombre: 'Producto de Ejemplo',
     descripcion: 'Vaporesso Luxe PM-40.',
@@ -20,18 +20,30 @@ const ProductDetail = () => {
       <p><strong>Precio:</strong> {product.precio}</p>
       <p><strong>SKU:</strong> {product.sku}</p>
       <p><strong>Cantidad Disponible:</strong> {product.cantidadDisponible}</p>
+      <button className="buy-button" onClick={handleCompraClick}>Comprar</button>
     </div>
   );
 };
 
+ProductDetail.propTypes = {
+  handleCompraClick: PropTypes.func.isRequired,
+};
 
 function App() {
+  const [mensajeCompra, setMensajeCompra] = useState('');
+
+  const handleCompraClick = () => {
+    setMensajeCompra('Gracias por su compra, nos pondremos en contacto con usted!');
+  };
+
   return (
     <div className="app">
-      <ProductDetail />
+      <ProductDetail handleCompraClick={handleCompraClick} />
+      <div className="buy-message-container">
+        <div className="buy-message">{mensajeCompra}</div>
+      </div>
     </div>
   );
 }
-
 
 export default App;
